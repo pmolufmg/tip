@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecionando para o presente...</title>
+</head>
+
+<body>
+  <script>
+    // Captura o valor do parâmetro "video" da URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const videoId = urlParams.get('video');
+
+    if (videoId === '1') {
+      window.location.href = 'rickroll.html';
+    } else if (videoId === '2') {
+      window.location.href = 'moskau.html';
+    } else if (videoId === '3') {
+      window.location.href = 'woodys.html';
+    } else if (videoId === '4') {
+      window.location.href = 'wing.html';
+    } else if (videoId === '5') {
+      window.location.href = 'rasputin.html';
+    } else {
+      document.body.innerHTML = '<h1>Parâmetro inválido! Use ?video=1-5 na URL.</h1>';
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procure no Google</title>
+</head>
+
+<body style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #000000;">
+    <video id="videoPlayer" controls width="720" loop autoplay playsinline>
+        <source src="./rickroll.mp4" type="video/mp4">
+        Seu navegador não suporta o vídeo.
+    </video>
+    <script>
+        // Captura o valor do parâmetro "start" da URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const startTime = urlParams.get('start') || 43; // Define o início padrão aos 43 segundos se não houver parâmetro
+
+        const video = document.getElementById('videoPlayer');
+        video.addEventListener('loadedmetadata', function () {
+            video.currentTime = parseFloat(startTime);
+            video.requestFullscreen().then(() => {video.play();});
+        });
+    </script>
+</body>
+
+</html>
