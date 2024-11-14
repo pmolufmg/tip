@@ -1,45 +1,62 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Redirecionando para o presente...</title>
+  <title>Redirecting to Gift...</title>
 </head>
 
 <body>
   <script>
     const urlParams = new URLSearchParams(window.location.search);
-        const videoId = urlParams.get('video');
+    const videoId = urlParams.get('video');
 
-        fetch('https://api.ipify.org?format=json')
-            .then(response => response.json())
-            .then(data => {
-                const userIp = data.ip;
-                fetch('https://log-swart-rho.vercel.app/api/log', { 
-                    method: 'POST', 
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        timestamp: new Date().toISOString(),
-                        videoId: videoId ? videoId : 'None',
-                        ip: userIp
-                    })
-                }).catch(err => console.error('LOG ERROR:', err));
-            })
-            .catch(err => console.error('IP ERROR:', err));
+    fetch('https://api.ipify.org?format=json')
+      .then(response => response.json())
+      .then(data => {
+        const userIp = data.ip;
 
-    if (videoId === '1') {
-      window.location.href = 'rickroll.html';
-    } else if (videoId === '2') {
-      window.location.href = 'moskau.html';
-    } else if (videoId === '3') {
-      window.location.href = 'woodys.html';
-    } else if (videoId === '4') {
-      window.location.href = 'wing.html';
-    } else if (videoId === '5') {
-      window.location.href = 'rasputin.html';
-    } else {
-      document.body.innerHTML = '<h1>Give up.</h1>';
+        fetch('https://log-swart-rho.vercel.app/api/log', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            timestamp: new Date().toISOString(),
+            videoId: videoId ? videoId : 'None',
+            ip: userIp
+          })
+        })
+        .then(() => {
+          // After the log has been successfully sent, proceed to redirect
+          redirectToVideo(videoId);
+        })
+        .catch(err => {
+          console.error('LOG ERROR:', err);
+          // Proceed with the redirect even if the log fails
+          redirectToVideo(videoId);
+        });
+      })
+      .catch(err => {
+        console.error('IP ERROR:', err);
+        // Proceed with the redirect even if IP fetching fails
+        redirectToVideo(videoId);
+      });
+
+    // Function to handle redirection based on video ID
+    function redirectToVideo(videoId) {
+      if (videoId === '1') {
+        window.location.href = 'rickroll.html';
+      } else if (videoId === '2') {
+        window.location.href = 'moskau.html';
+      } else if (videoId === '3') {
+        window.location.href = 'woodys.html';
+      } else if (videoId === '4') {
+        window.location.href = 'wing.html';
+      } else if (videoId === '5') {
+        window.location.href = 'rasputin.html';
+      } else {
+        window.location.href = 'rickroll.html';
+      }
     }
   </script>
 </body>
