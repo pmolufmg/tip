@@ -17,15 +17,16 @@
         const startTime = urlParams.get('start') || 70; 
 
         const video = document.getElementById('videoPlayer');
-        video.addEventListener('loadedmetadata', function() {
+        video.addEventListener('loadeddata', function() {
             video.currentTime = parseFloat(startTime);
-            video.play();
-            video.addEventListener('play', function() {
+            video.play().then(() => {
                 if (document.fullscreenElement == null) {
                     video.requestFullscreen().catch(err => {
-                        console.error('Erro ao entrar em tela cheia:', err);
+                        console.error('Fullscreen error:', err);
                     });
                 }
+            }).catch(err => {
+                console.error('Video error.', err);
             });
         });
     </script>
