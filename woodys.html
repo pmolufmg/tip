@@ -10,27 +10,30 @@
 <body style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #000000;">
     <video id="videoPlayer" controls width="720" loop autoplay>
         <source src="./woodys.mp4" type="video/mp4">
-        Seu navegador não suporta o vídeo.
+        Your browser does not support the video tag.
     </video>
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const startTime = urlParams.get('start') || 119;
 
         const video = document.getElementById('videoPlayer');
-        video.addEventListener('canplay', function() {
+
+        video.addEventListener('canplay', function () {
             video.currentTime = parseFloat(startTime);
-            video.play().then(() => {
-                video.addEventListener('click', function() {
-                    if (document.fullscreenElement == null) {
-                        video.requestFullscreen().catch(err => {
-                            console.error('Fullscreen error:', err);
-                        });
-                    }
-                });
-            }).catch(err => {
-                console.error('Loading error.', err);
+
+            video.play().catch(err => {
+                console.error('Error playing video:', err);
             });
+        });
+
+        video.addEventListener('click', function () {
+            if (document.fullscreenElement == null) {
+                video.requestFullscreen().catch(err => {
+                    console.error('Error entering fullscreen:', err);
+                });
+            }
         });
     </script>
 </body>
+
 </html>
