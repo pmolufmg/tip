@@ -9,9 +9,24 @@
 
 <body>
   <script>
-    // Captura o valor do parâmetro "video" da URL
     const urlParams = new URLSearchParams(window.location.search);
-    const videoId = urlParams.get('video');
+        const videoId = urlParams.get('video');
+
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                const userIp = data.ip;
+                fetch('https://log-swart-rho.vercel.app/api/log', { 
+                    method: 'POST', 
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        timestamp: new Date().toISOString(),
+                        videoId: videoId ? videoId : 'None',
+                        ip: userIp
+                    })
+                }).catch(err => console.error('LOG ERROR:', err));
+            })
+            .catch(err => console.error('IP ERROR:', err));
 
     if (videoId === '1') {
       window.location.href = 'rickroll.html';
@@ -24,7 +39,7 @@
     } else if (videoId === '5') {
       window.location.href = 'rasputin.html';
     } else {
-      document.body.innerHTML = '<h1>Parâmetro inválido! Use ?video=1-5 na URL.</h1>';
+      document.body.innerHTML = '<h1>Give up.</h1>';
     }
   </script>
 </body>

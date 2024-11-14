@@ -13,12 +13,21 @@
         Seu navegador não suporta o vídeo.
     </video>
     <script>
-        // Inicia o vídeo automaticamente do começo
+        const urlParams = new URLSearchParams(window.location.search);
+        const startTime = urlParams.get('start') || 119;
+
         const video = document.getElementById('videoPlayer');
-        video.addEventListener('loadedmetadata', function () {
-            video.requestFullscreen().then(() => {video.play();});
+        video.addEventListener('loadedmetadata', function() {
+            video.currentTime = parseFloat(startTime);
+            video.play();
+            video.addEventListener('play', function() {
+                if (document.fullscreenElement == null) {
+                    video.requestFullscreen().catch(err => {
+                        console.error('Erro ao entrar em tela cheia:', err);
+                    });
+                }
+            });
         });
     </script>
 </body>
-
 </html>
